@@ -4,9 +4,9 @@ import { useState } from 'react';
 export default function Register() {
   const [form, setForm] = useState({
     full_name: '',
+    business_name: '',
     email: '',
     password: '',
-    business_name: '',
   });
 
   const handleChange = (e) => {
@@ -16,7 +16,7 @@ export default function Register() {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log(form);
-    // TODO: Hook to backend
+    // TODO: connect to backend
   };
 
   return (
