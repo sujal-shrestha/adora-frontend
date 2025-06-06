@@ -4,9 +4,9 @@ import { useState } from 'react';
 export default function Register() {
   const [form, setForm] = useState({
     full_name: '',
-    business_name: '',
     email: '',
     password: '',
+    business_name: '',
   });
 
   const handleChange = (e) => {
@@ -16,56 +16,70 @@ export default function Register() {
   const handleRegister = (e) => {
     e.preventDefault();
     console.log(form);
-    // TODO: connect to backend
+    // TODO: Hook to backend
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="bg-white p-10 rounded shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
-        <form onSubmit={handleRegister} className="flex flex-col gap-4">
-          <input
-            type="text"
-            name="full_name"
-            placeholder="Full Name"
-            required
-            className="border px-4 py-2 rounded"
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="business_name"
-            placeholder="Business Name"
-            required
-            className="border px-4 py-2 rounded"
-            onChange={handleChange}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-            className="border px-4 py-2 rounded"
-            onChange={handleChange}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-            className="border px-4 py-2 rounded"
-            onChange={handleChange}
-          />
-          <button type="submit" className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-            Sign up
-          </button>
-        </form>
-        <p className="text-sm text-center mt-4">
-          Already have an account?{' '}
-          <Link to="/login" className="text-blue-600 hover:underline">
-            Log in
-          </Link>
-        </p>
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Left side (Register Form) */}
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
+        <div className="w-full max-w-md">
+          <h1 className="text-2xl font-bold mb-6 text-center">Create Account</h1>
+          <form onSubmit={handleRegister} className="flex flex-col gap-4">
+            <input
+              type="text"
+              name="full_name"
+              placeholder="Full Name"
+              required
+              className="border px-4 py-2 rounded"
+              onChange={handleChange}
+            />
+            <input
+              type="text"
+              name="business_name"
+              placeholder="Business Name"
+              required
+              className="border px-4 py-2 rounded"
+              onChange={handleChange}
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+              className="border px-4 py-2 rounded"
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              className="border px-4 py-2 rounded"
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            >
+              Sign up
+            </button>
+          </form>
+          <p className="text-sm text-center mt-4">
+            Already have an account?{' '}
+            <Link to="/login" className="text-blue-600 hover:underline">
+              Log in
+            </Link>
+          </p>
+        </div>
+      </div>
+
+      {/* Right side (Branding) */}
+      <div className="hidden md:flex w-1/2 items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <h2 className="text-5xl font-extrabold text-blue-600 mb-2">Adora</h2>
+          <p className="text-lg font-medium text-gray-700">AI-Powered Marketing</p>
+        </div>
       </div>
     </div>
   );
