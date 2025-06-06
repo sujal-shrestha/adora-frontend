@@ -1,13 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 export default function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log({ email, password });
+
+    if (!email || !password) {
+      setError('Please fill out all fields');
+      return;
+    }
+
+    if (email === 'admin' && password === 'admin1234') {
+      navigate('/dashboard');
+    } else {
+      setError('Invalid credentials');
+    }
   };
 
   return (
@@ -16,11 +28,11 @@ export default function Login() {
       <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
         <div className="w-full max-w-md">
           <h1 className="text-2xl font-bold mb-6">Log in</h1>
+          {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <input
-              type="email"
-              placeholder="Email"
-              required
+              type="text"
+              placeholder="Email or Username"
               className="border px-4 py-2 rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -28,7 +40,6 @@ export default function Login() {
             <input
               type="password"
               placeholder="Password"
-              required
               className="border px-4 py-2 rounded"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -40,7 +51,7 @@ export default function Login() {
             </div>
             <button
               type="submit"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              className="bg-blue-600 text-white py-2 rounded-full hover:bg-blue-700 transition"
             >
               Log in
             </button>

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Homepage from '../pages/Homepage';
+import Dashboard from '../pages/Dashboard';
 
 const AppRouter = () => {
   return (
@@ -10,7 +11,9 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Homepage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="*" element={<div>Fallback route works</div>} />
+
       </Routes>
     </BrowserRouter>
   );
