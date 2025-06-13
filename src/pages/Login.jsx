@@ -7,18 +7,30 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!email || !password) {
-      setError('Please fill out all fields');
-      return;
-    }
+    try {
+      const response = await fetch('http://localhost:10010/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (email === 'admin' && password === 'admin1234') {
-      navigate('/dashboard');
-    } else {
-      setError('Invalid credentials');
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('✅ Login successful');
+        // Example: localStorage.setItem('token', data.token);
+        navigate('/dashboard');
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Server error');
     }
   };
 
@@ -27,15 +39,16 @@ export default function Login() {
       {/* Left - Form */}
       <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-8">
         <div className="w-full max-w-md">
-          <h1 className="text-2xl font-bold mb-6">Log in</h1>
-          {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
+          <h1 className="text-2xl font-bold mb-6 text-center">Log in</h1>
+          {error && <p className="text-red-500 mb-4 text-sm text-center">{error}</p>}
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <input
-              type="text"
-              placeholder="Email or Username"
+              type="email"
+              placeholder="Email"
               className="border px-4 py-2 rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <input
               type="password"
@@ -43,6 +56,7 @@ export default function Login() {
               className="border px-4 py-2 rounded"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <div className="flex justify-between text-sm">
               <Link to="/forgot-password" className="text-blue-600 hover:underline">

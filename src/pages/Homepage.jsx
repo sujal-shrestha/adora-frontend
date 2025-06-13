@@ -37,7 +37,7 @@ export default function Homepage() {
         AI-Powered Marketing for Ambitious Brands
       </h2>
       <p className="text-gray-600 mb-8 max-w-md md:max-w-full">
-        Adora helps you create high-converting campaigns, spy on competitors, and ride marketing trends — all powered by AI.
+        Adora helps you create high-converting campaigns, spy on competitors, and ride marketing trends all powered by AI.
       </p>
       <a
         href="#features"

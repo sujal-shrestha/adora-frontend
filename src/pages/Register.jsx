@@ -1,23 +1,36 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
+
 
 export default function Register() {
   const [form, setForm] = useState({
-    full_name: '',
+    name: '',
     email: '',
     password: '',
-    business_name: '',
   });
+
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    console.log(form);
-    // TODO: Hook to backend
-  };
+  const handleRegister = async (e) => {
+  e.preventDefault();
+  console.log('⏳ Submitting...');
+
+  try {
+    const res = await axios.post('http://localhost:10010/api/auth/register', form);
+
+    alert('✅ Registered successfully');
+    navigate('/login');
+  } catch (err) {
+    console.error(err.response?.data || err);
+    setError(err.response?.data?.message || 'Registration failed. Try again.');
+  }
+};
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -28,16 +41,8 @@ export default function Register() {
           <form onSubmit={handleRegister} className="flex flex-col gap-4">
             <input
               type="text"
-              name="full_name"
+              name="name"
               placeholder="Full Name"
-              required
-              className="border px-4 py-2 rounded"
-              onChange={handleChange}
-            />
-            <input
-              type="text"
-              name="business_name"
-              placeholder="Business Name"
               required
               className="border px-4 py-2 rounded"
               onChange={handleChange}
@@ -58,6 +63,7 @@ export default function Register() {
               className="border px-4 py-2 rounded"
               onChange={handleChange}
             />
+            {error && <p className="text-red-600 text-sm">{error}</p>}
             <button
               type="submit"
               className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
