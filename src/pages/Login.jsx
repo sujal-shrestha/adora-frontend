@@ -8,31 +8,35 @@ export default function Login() {
   const [error, setError] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await fetch('http://localhost:10010/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const response = await fetch('http://localhost:10010/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-        alert('✅ Login successful');
-        // Example: localStorage.setItem('token', data.token);
-        navigate('/dashboard');
-      } else {
-        setError(data.message || 'Login failed');
-      }
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('Server error');
+    if (response.ok) {
+      alert('✅ Login successful');
+
+      // SAVE THE TOKEN
+      localStorage.setItem('token', data.token);
+
+      navigate('/dashboard');
+    } else {
+      setError(data.message || 'Login failed');
     }
-  };
+  } catch (err) {
+    console.error('Login error:', err);
+    setError('Server error');
+  }
+};
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
