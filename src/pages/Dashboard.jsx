@@ -5,7 +5,7 @@ import {
   FaChartBar,
   FaFileAlt,
   FaLightbulb,
-  FaVideo,
+  FaRegImage,
   FaCog,
 } from 'react-icons/fa';
 
@@ -18,7 +18,7 @@ export default function Dashboard() {
     { label: 'SPY', path: '/dashboard/spy', icon: <FaBullseye /> },
     { label: 'Ads Center', path: '/dashboard/ads', icon: <FaChartBar /> },
     { label: 'Campaigns', path: '/dashboard/campaigns', icon: <FaFileAlt /> },
-    { label: 'Content', path: '/dashboard/content', icon: <FaVideo /> },
+    { label: 'My Media', path: '/dashboard/media', icon: <FaRegImage /> },
     { label: 'Trends', path: '/dashboard/trends', icon: <FaLightbulb /> },
     { label: 'Settings', path: '/dashboard/settings', icon: <FaCog /> },
   ];

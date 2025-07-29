@@ -7,7 +7,7 @@ import HomeOverview from '../pages/HomeOverview';
 import SpyTool from '../pages/SpyTool';
 import AdsCenter from '../pages/AdsCenter';
 import Campaigns from '../pages/Campaigns';
-import ContentGenerator from '../pages/ContentGenerator';
+import MyMedia from '../pages/MyMedia';
 import TrendFeed from '../pages/TrendFeed';
 import Settings from '../pages/Settings';
 
@@ -19,13 +19,12 @@ export default function AppRouter() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<HomeOverview />} />
           <Route path="spy" element={<SpyTool />} />
           <Route path="ads" element={<AdsCenter />} />
           <Route path="campaigns" element={<Campaigns />} />
-          <Route path="content" element={<ContentGenerator />} />
+          <Route path="media" element={<MyMedia />} />
           <Route path="trends" element={<TrendFeed />} />
           <Route path="settings" element={<Settings />} />\
         </Route>
