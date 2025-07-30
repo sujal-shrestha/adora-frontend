@@ -55,6 +55,24 @@ export default function MyMedia() {
     setIsOpen(true);
   };
 
+  const downloadImage = async (url, filename) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename || 'image.jpg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error('Download failed:', err);
+    }
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-3xl font-bold text-blue-800 mb-6">My Media</h2>
@@ -74,7 +92,7 @@ export default function MyMedia() {
       {/* Media Gallery */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {files.map((file) => (
-          <div key={file._id} className="flex flex-col items-center group">
+          <div key={file._id} className="flex flex-col items-center group relative">
             {/* Square tile */}
             <div
               className="relative w-full aspect-square rounded overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
@@ -105,6 +123,17 @@ export default function MyMedia() {
                   Delete
                 </button>
               </div>
+
+              {/* Download button at bottom-right */}
+              <button
+                className="absolute bottom-2 right-2 bg-white text-green-700 px-2 py-1 text-xs rounded shadow hover:bg-green-100 z-10"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await downloadImage(`http://localhost:10010${file.url}`, file.filename);
+                }}
+              >
+                Download
+              </button>
             </div>
 
             {/* Editable file name */}
