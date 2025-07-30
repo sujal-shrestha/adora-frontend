@@ -63,7 +63,7 @@ const SpyTool = () => {
 
       <button
         onClick={() => setOpen(true)}
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
+        className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
       >
         Open Facebook Ads Library
       </button>
@@ -78,7 +78,7 @@ const SpyTool = () => {
               onClick={() => setSelectedNiche(niche)}
               className={`px-4 py-2 rounded-full border ${
                 selectedNiche === niche
-                  ? "bg-blue-600 text-white"
+                  ? "bg-indigo-600 text-white"
                   : "bg-white text-gray-700 border-gray-300"
               } transition`}
             >
