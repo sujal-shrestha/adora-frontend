@@ -81,7 +81,7 @@ export default function MyMedia() {
               onClick={() => openPreview(file)}
             >
               <img
-                src={`http://localhost:10010/uploads/${file.filename}`}
+                src={`http://localhost:10010${file.url}`}
                 alt="media"
                 className="w-full h-full object-cover"
               />
@@ -90,7 +90,7 @@ export default function MyMedia() {
                   className="bg-white text-blue-700 px-3 py-1 rounded hover:bg-blue-100 text-sm font-semibold"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigator.clipboard.writeText(`http://localhost:10010/uploads/${file.filename}`);
+                    navigator.clipboard.writeText(`http://localhost:10010${file.url}`);
                   }}
                 >
                   Copy URL
@@ -142,7 +142,7 @@ export default function MyMedia() {
             </div>
             <div className="p-4 flex flex-col items-center">
               <img
-                src={`http://localhost:10010/uploads/${selected?.filename}`}
+                src={`http://localhost:10010${selected?.url}`}
                 alt="Full"
                 className="max-h-[60vh] object-contain"
               />
