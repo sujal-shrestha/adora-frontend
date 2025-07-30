@@ -27,6 +27,9 @@ export default function Login() {
       // SAVE THE TOKEN
       localStorage.setItem('token', data.token);
 
+      // SAVE USER
+      localStorage.setItem('adora_user', JSON.stringify(data.user));
+
       navigate('/dashboard');
     } else {
       setError(data.message || 'Login failed');
