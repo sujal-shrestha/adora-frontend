@@ -8,7 +8,10 @@ const Settings = () => {
   const [profile, setProfile] = useState({ name: '', email: '' });
   const [passwordForm, setPasswordForm] = useState({ currentPassword: '', newPassword: '' });
   const [message, setMessage] = useState('');
+  const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
 
   useEffect(() => {
     fetchProfile();
@@ -52,10 +55,8 @@ const Settings = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!confirm('Are you sure you want to delete your account? This cannot be undone.')) return;
-
     try {
-      await api.delete('/users/me');
+      const res = await api.delete('/users/me');
       localStorage.removeItem('token');
       alert('Account deleted');
       navigate('/login');
@@ -108,7 +109,7 @@ const Settings = () => {
         {/* Log Out */}
         <div className="mt-8">
           <button
-            onClick={handleLogout}
+            onClick={() => setShowLogoutConfirm(true)}
             className="flex items-center w-full px-4 py-2 text-left rounded text-gray-600 hover:bg-gray-100"
           >
             <FiLogOut className="mr-2" /> Log Out
@@ -187,7 +188,7 @@ const Settings = () => {
             <h2 className="text-2xl font-bold mb-4 text-red-700">Danger Zone</h2>
             <p className="mb-4 text-gray-600">Deleting your account is permanent and cannot be undone.</p>
             <button
-              onClick={handleDeleteAccount}
+              onClick={() => setShowConfirm(true)}
               className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition"
             >
               Delete My Account
@@ -199,6 +200,58 @@ const Settings = () => {
           <div className="text-center text-blue-600 font-medium pt-4">{message}</div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
+            <h2 className="text-lg font-bold mb-2">Are you sure?</h2>
+            <p className="text-gray-600 mb-4">This action cannot be undone.</p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => setShowConfirm(false)}
+                className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => {
+                  setShowConfirm(false);
+                  handleDeleteAccount();
+                }}
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+              >
+                Yes, Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {showLogoutConfirm && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
+          <h2 className="text-lg font-bold mb-2">Log out?</h2>
+          <p className="text-gray-600 mb-4">Are you sure you want to log out?</p>
+          <div className="flex justify-center gap-4">
+            <button
+              onClick={() => setShowLogoutConfirm(false)}
+              className="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => {
+                setShowLogoutConfirm(false);
+                handleLogout();
+              }}
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+            >
+              Yes, Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
     </div>
   );
 };
