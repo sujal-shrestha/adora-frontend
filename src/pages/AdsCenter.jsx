@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:10010";
+import api from "../api"; // ✅ Using centralized Axios instance
 import { Dialog } from "@headlessui/react";
 import { X, Plus } from "lucide-react";
 
@@ -26,14 +25,11 @@ const AdsCenter = () => {
 
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
-        const headers = { Authorization: `Bearer ${token}` };
-
-        const profileRes = await axios.get("/api/auth/me", { headers });
+        const profileRes = await api.get("/auth/me");
         const user = profileRes.data.user || profileRes.data;
         setCredits(user.credits || 20);
 
-        const mediaRes = await axios.get("/api/media/me/media", { headers });
+        const mediaRes = await api.get("/media/me/media");
         setUserMedia(Array.isArray(mediaRes.data) ? mediaRes.data : []);
       } catch (err) {
         console.error("❌ Fetch error:", err);
@@ -49,24 +45,17 @@ const AdsCenter = () => {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
 
-      const res = await axios.post(
-        "/api/ads/generate",
-        {
-          prompt,
-          image: selectedMedia, // base64 or media URL
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await api.post("/ads/generate", {
+        prompt,
+        image: selectedMedia,
+      });
 
       setGeneratedImage(res.data.image);
       setCredits(res.data.remainingCredits);
       setPrompt("");
       setSelectedMedia(null);
-      setUserMedia((prev) => [res.data.image, ...prev]); // Optional: update My Media cache
+      setUserMedia((prev) => [res.data.image, ...prev]);
     } catch (error) {
       alert(error.response?.data?.message || "Error generating ad");
     } finally {
@@ -81,30 +70,20 @@ const AdsCenter = () => {
       productName: "Adora Credits",
       productUrl: "http://localhost:5173",
       eventHandler: {
-        onSuccess: (payload) => {
-          axios
-            .post(
-              "/api/payment/verify",
-              { pidx: payload.pidx },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            )
-            .then((res) => {
-              if (res.data.success) {
-                setCredits((prev) => prev + res.data.creditsAdded);
-                setShowKhaltiModal(false);
-                alert("✅ Payment successful. Credits added.");
-              } else {
-                alert("❌ Payment verification failed.");
-              }
-            })
-            .catch((err) => {
-              console.error("❌ Verification error", err);
-              alert("❌ Failed to verify payment.");
-            });
+        onSuccess: async (payload) => {
+          try {
+            const res = await api.post("/payment/verify", { pidx: payload.pidx });
+            if (res.data.success) {
+              setCredits((prev) => prev + res.data.creditsAdded);
+              setShowKhaltiModal(false);
+              alert("✅ Payment successful. Credits added.");
+            } else {
+              alert("❌ Payment verification failed.");
+            }
+          } catch (err) {
+            console.error("❌ Verification error", err);
+            alert("❌ Failed to verify payment.");
+          }
         },
         onError: (error) => {
           console.error("❌ Payment Error", error);
@@ -195,7 +174,7 @@ const AdsCenter = () => {
         </button>
       </div>
 
-      {/* Media Source Picker */}
+      {/* Dialogs */}
       <Dialog open={showMediaOptions} onClose={() => setShowMediaOptions(false)}>
         <div className="fixed inset-0 bg-black/40" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
@@ -219,7 +198,7 @@ const AdsCenter = () => {
                     if (file) {
                       const reader = new FileReader();
                       reader.onloadend = () => {
-                        setSelectedMedia(reader.result); // base64
+                        setSelectedMedia(reader.result);
                         setShowMediaOptions(false);
                       };
                       reader.readAsDataURL(file);
@@ -227,7 +206,6 @@ const AdsCenter = () => {
                   }}
                 />
               </label>
-
               <button
                 onClick={() => {
                   setShowMediaOptions(false);
@@ -242,7 +220,6 @@ const AdsCenter = () => {
         </div>
       </Dialog>
 
-      {/* My Media Picker */}
       <Dialog open={showMyMediaPicker} onClose={() => setShowMyMediaPicker(false)}>
         <div className="fixed inset-0 bg-black/40" />
         <div className="fixed inset-0 flex items-center justify-center p-4">
@@ -279,7 +256,6 @@ const AdsCenter = () => {
         </div>
       </Dialog>
 
-      {/* Khalti Credit Modal */}
       <Dialog open={showKhaltiModal} onClose={() => setShowKhaltiModal(false)}>
         <div className="fixed inset-0 bg-black/40" />
         <div className="fixed inset-0 flex items-center justify-center p-4">

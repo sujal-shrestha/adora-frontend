@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { FiSearch } from 'react-icons/fi';
+import api from '../api'; // ✅ Use shared API instance
 
 const TrendFeed = () => {
   const [niche, setNiche] = useState('');
@@ -15,7 +15,8 @@ const TrendFeed = () => {
     setTrends([]);
 
     try {
-      const res = await axios.post('/api/trends', { niche });
+      const res = await api.post('/trends', { niche }); 
+      console.log('🌐 Full API response:', res.data);// ✅ Uses api.js
       setTrends(res.data.trends || []);
     } catch (err) {
       console.error('Error fetching trends:', err);
