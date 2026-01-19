@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import novaLogo from "../../assets/nova_logo.png";
 
 const navItems = [
   { label: "Overview", to: "/dashboard" },
@@ -18,12 +19,21 @@ export default function Sidebar() {
           {/* Brand */}
           <div className="px-5 pt-5 pb-4">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-fuchsia-500 shadow-[0_0_24px_rgba(168,85,247,0.35)] flex items-center justify-center">
-                <span className="text-white font-extrabold">N</span>
+              <div className="h-10 w-10 rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-[0_0_24px_rgba(168,85,247,0.20)] flex items-center justify-center overflow-hidden">
+                <img
+                  src={novaLogo}
+                  alt="Nova logo"
+                  className="h-7 w-7 object-contain"
+                />
               </div>
+
               <div>
-                <div className="text-white font-bold text-lg leading-tight">Nova</div>
-                <div className="text-white/60 text-xs">AI Marketing Assistant</div>
+                <div className="text-white font-bold text-lg leading-tight">
+                  Nova
+                </div>
+                <div className="text-white/60 text-xs">
+                  AI Marketing Assistant
+                </div>
               </div>
             </div>
           </div>
@@ -58,7 +68,9 @@ export default function Sidebar() {
             <div className="mt-6 mx-2 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 p-4">
               <div className="text-white font-semibold text-sm">Pro tip</div>
               <div className="text-white/60 text-xs mt-1">
-                Save your best creatives in <span className="text-white/80">My Media</span> and reuse them in Ads Center.
+                Save your best creatives in{" "}
+                <span className="text-white/80">My Media</span> and reuse them in
+                Ads Center.
               </div>
             </div>
           </div>
