@@ -1,5 +1,5 @@
 import Sidebar from "./Sidebar";
-import HeaderBar from "./HeaderBar";
+import HeaderBar from "./HeadBar";
 
 export default function MainLayout({ children }) {
   return (
