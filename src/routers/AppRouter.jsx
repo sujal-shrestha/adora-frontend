@@ -4,12 +4,15 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Dashboard from "../pages/Dashboard";
 import HomeOverview from "../pages/HomeOverview";
-import SpyTool from "../pages/SpyTool";
 import AdsCenter from "../pages/AdsCenter";
 import Campaigns from "../pages/Campaigns";
 import MyMedia from "../pages/MyMedia";
 import TrendFeed from "../pages/TrendFeed";
 import Settings from "../pages/Settings";
+
+// ✅ NEW imports
+import BrandKit from "../pages/BrandKit";
+import AIStudio from "../pages/AIStudio";
 
 export default function AppRouter() {
   return (
@@ -21,7 +24,9 @@ export default function AppRouter() {
 
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index element={<HomeOverview />} />
-          <Route path="spy" element={<SpyTool />} />
+          <Route path="ai" element={<AIStudio />} />             {/* ✅ NEW */}
+          <Route path="brand-kit" element={<BrandKit />} />      {/* ✅ NEW */}
+
           <Route path="ads" element={<AdsCenter />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="media" element={<MyMedia />} />
