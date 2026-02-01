@@ -8,7 +8,7 @@ import {
   FiImage,
   FiLayers,
   FiPlus,
-  FiSparkles,
+  FiZap,
   FiTrendingUp,
 } from "react-icons/fi";
 
@@ -240,7 +240,7 @@ export default function HomeOverview() {
                 </div>
               </div>
               <div className="inline-flex items-center gap-2 text-white/70 text-sm">
-                <FiSparkles />
+                <FiZap />
                 Brand-aware outputs
               </div>
             </div>
@@ -310,7 +310,7 @@ export default function HomeOverview() {
                       : "bg-white/10 text-white/40 cursor-not-allowed",
                   ].join(" ")}
                 >
-                  <FiSparkles />
+                  <FiZap />
                   Generate in Ads Center
                   <FiArrowRight />
                 </button>
