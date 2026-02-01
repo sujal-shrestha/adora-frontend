@@ -3,7 +3,12 @@ import novaLogo from "../../assets/nova_logo.png";
 
 const navItems = [
   { label: "Overview", to: "/dashboard" },
-  { label: "Spy", to: "/dashboard/spy" },
+
+  // ✅ Core brain pages
+  { label: "AI Studio", to: "/dashboard/ai" },          // ✅ NEW
+  { label: "Brand Kit", to: "/dashboard/brand-kit" },   // keep this exact path
+
+  // Workspace
   { label: "Ads Center", to: "/dashboard/ads" },
   { label: "Campaigns", to: "/dashboard/campaigns" },
   { label: "My Media", to: "/dashboard/media" },
@@ -68,9 +73,8 @@ export default function Sidebar() {
             <div className="mt-6 mx-2 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-white/0 p-4">
               <div className="text-white font-semibold text-sm">Pro tip</div>
               <div className="text-white/60 text-xs mt-1">
-                Save your best creatives in{" "}
-                <span className="text-white/80">My Media</span> and reuse them in
-                Ads Center.
+                Start in <span className="text-white/80">Brand Kit</span>, then generate everything inside{" "}
+                <span className="text-white/80">AI Studio</span>.
               </div>
             </div>
           </div>
